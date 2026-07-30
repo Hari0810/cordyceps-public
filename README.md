@@ -6,11 +6,15 @@ This public repository contains the built v1 web artifact plus a sanitized snaps
 
 ## Screenshots
 
-Screenshots from the original [Cordyceps LinkedIn post](https://www.linkedin.com/feed/update/urn:li:activity:7470379073429725184/).
+Mobile screenshots from the original [Cordyceps LinkedIn post](https://www.linkedin.com/feed/update/urn:li:activity:7470379073429725184/), plus a desktop beta capture from this public snapshot.
 
 <p>
   <img src="docs/screenshots/linkedin-dashboard.jpg" alt="Cordyceps mobile dashboard" height="520">
   <img src="docs/screenshots/linkedin-tasks.jpg" alt="Cordyceps mobile tasks page" height="520">
+</p>
+
+<p>
+  <img src="docs/screenshots/desktop-beta.png" alt="Cordyceps desktop beta dashboard" width="820">
 </p>
 
 ## What It Does
@@ -26,27 +30,69 @@ Cordyceps combines a daily command surface with local-first productivity tools:
 
 The app is designed to keep the core user experience in the browser. Most personal state is stored locally through browser storage and IndexedDB-style stores, with optional helper APIs used for features that need server-side assistance.
 
+## Brief History
+
+Cordyceps began as a small daily todo and time-blocking app: a fast surface for deciding what mattered today, marking work as done, and keeping a light rhythm around habits. The early shape was intentionally simple, closer to a personal command list than a full productivity suite.
+
+Over time it grew into a broader "life OS" experiment. Tasks, habits, rituals, notes, reading, planning, feeds, budgeting, calendar signals, and AI-assisted reflection all started to orbit the same local-first shell. The app also accumulated serious release infrastructure for a side project: offline PWA behavior, encrypted local storage paths, import/export flows, update prompts, app icons, service worker versioning, and optional helper APIs.
+
+That expansion produced useful ideas, but also a lot of feature drift. Several ambitious surfaces were explored, removed, abandoned, or de-emphasized along the way: OCR-assisted budgeting, multilingual learning drills, current-affairs mindmaps, email-style workflows, richer desktop layouts, and sync/account experiments. Some traces remain in the public snapshot as beta UI, bundled assets, backend helpers, or legacy routes; they are included here to preserve the v1 artifact, not to present every experiment as finished product.
+
+The public v1 snapshot represents the refined endpoint of that cycle: still recognizably a todo-first PWA, but with the broader architecture and experiments visible around it. The separate v2 rewrite is intentionally excluded from this repository.
+
 ## Architecture Diagram
 
 ```mermaid
-flowchart TD
-    User["User on mobile browser or installed PWA"] --> Shell["PWA shell<br/>index.html, manifest, sw.js"]
-    Shell --> ServiceWorker["Service worker<br/>offline cache and update checks"]
-    Shell --> React["React / Vite bundle<br/>hashed assets"]
-    Shell --> Legacy["Legacy ES-module runtime<br/>app.js, app/, features/"]
+flowchart LR
+    User["User<br/>mobile browser, installed PWA, or desktop beta"]
 
-    React <-->|events and state snapshots| Bridge["Browser app bridge"]
-    Legacy <-->|events and state snapshots| Bridge
+    subgraph Frontend["Frontend / PWA shipped in this repo"]
+        Shell["App shell<br/>index.html, manifest, sw.js"]
+        React["React / Vite UI bundle<br/>hashed assets/ chunks"]
+        Legacy["Legacy ES-module app<br/>app.js, app/, features/"]
+        Bridge["Browser app bridge<br/>custom events + state snapshots"]
+        Modules["Shared browser modules<br/>API client, vault, push, DOM, state"]
+        LocalAI["On-device processing<br/>WebLLM, Transformers.js, OCR, PDF, EPUB"]
+    end
 
-    React --> Modules["Shared browser modules<br/>API, vault, push, DOM, state"]
+    subgraph BrowserAPIs["Browser platform APIs"]
+        Cache["Service worker cache<br/>offline shell + updates"]
+        Storage["Local user storage<br/>localStorage + IndexedDB-style stores"]
+        Workers["Workers / WASM / WebGPU-capable paths"]
+    end
+
+    subgraph Backend["Optional backend included in this public snapshot"]
+        Helper["serve.py<br/>static host + HTTP handler"]
+        ApiRoutes["Backend API surface<br/>/api/* routes"]
+        ApiModules["api/ Python modules<br/>RSS, ICS, current affairs, utilities"]
+        RuntimeData["Local runtime data<br/>data/ ignored, not committed"]
+    end
+
+    subgraph External["External APIs and feeds"]
+        Feeds["RSS / Atom feeds"]
+        Calendars["Calendar and ICS sources"]
+        Integrations["Optional OAuth, push, banking, mail providers"]
+    end
+
+    User --> Shell
+    Shell --> React
+    Shell --> Legacy
+    Shell --> Cache
+    React <-->|UI events + snapshots| Bridge
+    Legacy <-->|UI events + snapshots| Bridge
+    React --> Modules
     Legacy --> Modules
-    Modules --> Storage["Browser-local storage<br/>localStorage and IndexedDB-style stores"]
-    Modules --> LocalAI["On-device processing<br/>WebLLM, Transformers.js, OCR, PDF, EPUB"]
-
-    Modules -. optional /api calls .-> Helper["Python helper server<br/>serve.py"]
-    Helper --> ApiModules["api/ modules<br/>RSS, ICS, current affairs, utilities"]
-    Helper --> ServerData["Optional local server data<br/>data/ is ignored and not committed"]
-    ApiModules -. network fetches .-> External["External sources<br/>feeds, calendars, optional integrations"]
+    Modules --> Storage
+    Modules --> LocalAI
+    LocalAI --> Workers
+    Modules -. optional fetch .-> ApiRoutes
+    Helper --> Shell
+    Helper --> ApiRoutes
+    ApiRoutes --> ApiModules
+    ApiRoutes --> RuntimeData
+    ApiModules -. network fetch .-> Feeds
+    ApiModules -. parse/import .-> Calendars
+    ApiRoutes -. optional credentials required .-> Integrations
 ```
 
 ## Repository Shape
