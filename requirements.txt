@@ -1,0 +1,5 @@
+cryptography==46.0.7
+psycopg[binary,pool]==3.2.3
+pywebpush==2.1.1
+requests>=2.31.0
+trafilatura>=1.12

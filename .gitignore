@@ -1,0 +1,11 @@
+.env
+.env.local
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+data/
+htmlcov/
+.pytest_cache/
+playwright-report/
+test-results/
