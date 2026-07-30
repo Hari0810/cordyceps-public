@@ -6,9 +6,11 @@ This public repository contains the built v1 web artifact plus a sanitized snaps
 
 ## Screenshots
 
+Screenshots from the original [Cordyceps LinkedIn post](https://www.linkedin.com/feed/update/urn:li:activity:7470379073429725184/).
+
 <p>
-  <img src="docs/screenshots/mobile-landing.png" alt="Cordyceps mobile landing screen" width="260">
-  <img src="docs/screenshots/mobile-dashboard.png" alt="Cordyceps mobile dashboard" width="260">
+  <img src="docs/screenshots/linkedin-dashboard.jpg" alt="Cordyceps mobile dashboard" width="260">
+  <img src="docs/screenshots/linkedin-tasks.jpg" alt="Cordyceps mobile tasks page" width="260">
 </p>
 
 ## What It Does
