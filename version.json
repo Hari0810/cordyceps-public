@@ -1,0 +1,95 @@
+{
+  "version": "0.1.425",
+  "buildId": "2026.07.03-070443",
+  "builtAt": "2026-07-03T07:04:43.292Z",
+  "deployTarget": "public",
+  "deployPublicUrl": "",
+  "gitBranch": "",
+  "gitCommit": "",
+  "pwaInstanceId": "cordyceps",
+  "pwaInstanceLabel": "Cordyceps",
+  "forceUpdate": false,
+  "forceUpdateReason": "",
+  "updateSizeBytes": 80930172,
+  "changelog": [
+    "Skip /v2/* in the v1 service worker fetch handler",
+    "Fix landing title and explore cue",
+    "Rework desktop page layouts with sidebar-detail panes",
+    "Raise landing explore cue",
+    "Tighten desktop beta landing note"
+  ],
+  "changelogHistory": [
+    {
+      "version": "0.1.423",
+      "changes": [
+        "Fixed landing title descender clipping and kept the Explore cue below the beta link"
+      ]
+    },
+    {
+      "version": "0.1.421",
+      "changes": [
+        "Moved the landing page Explore cue closer to the desktop beta link"
+      ]
+    },
+    {
+      "version": "0.1.420",
+      "changes": [
+        "Tightened the landing page desktop beta note copy and spacing"
+      ]
+    },
+    {
+      "version": "0.1.419",
+      "changes": [
+        "Simplified the landing page desktop beta note"
+      ]
+    },
+    {
+      "version": "0.1.418",
+      "changes": [
+        "Changed the landing page desktop beta action into a smaller text link below the install button"
+      ]
+    },
+    {
+      "version": "0.1.417",
+      "changes": [
+        "Made the landing page install action primary and moved desktop beta access to a secondary action"
+      ]
+    },
+    {
+      "version": "0.1.409",
+      "changes": [
+        "Fixed Verbatim and other scheduled reminders so foreground timers stay armed and background push registrations include upcoming daily reminders"
+      ]
+    },
+    {
+      "version": "0.1.338",
+      "changes": [
+        "Future calendar events now stay saved after the app restarts, even when an older local durable snapshot exists"
+      ]
+    },
+    {
+      "version": "0.1.287",
+      "changes": [
+        "Simplified Long-term Goals around linked habits, with a green/amber/red signal that shows whether those habits are helping or hurting each goal"
+      ]
+    },
+    {
+      "version": "0.1.286",
+      "changes": [
+        "Softened Calendar button glass so controls are lighter, more transparent, and closer to the Mycelia sidebar treatment"
+      ]
+    },
+    {
+      "version": "0.1.285",
+      "changes": [
+        "Refined the Goals crown icon to use symmetrical filled geometry"
+      ]
+    },
+    {
+      "version": "0.1.284",
+      "changes": [
+        "Updated the Goals icon to a filled three-pronged crown with circular tips"
+      ]
+    }
+  ]
+}

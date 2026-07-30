@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  />
+  <meta name="theme-color" content="#050c11" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Cordyceps" />
+  <title>Cordyceps</title>
+  <script>
+    (() => {
+      const userAgent = navigator.userAgent || "";
+      const platform = navigator.userAgentData?.platform || navigator.platform || "";
+      const isAndroid = /Android/i.test(userAgent) || /Android/i.test(platform);
+      window.__CORDYCEPS_ANDROID_BLOCKED__ = isAndroid;
+
+      if (isAndroid) {
+        window.addEventListener("beforeinstallprompt", (event) => {
+          event.preventDefault();
+        });
+        return;
+      }
+
+      const manifestLink = document.createElement("link");
+      manifestLink.rel = "manifest";
+      manifestLink.href = "./manifest.webmanifest?v=20260324-160";
+      document.head.appendChild(manifestLink);
+    })();
+  </script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-CYtwDItZ.png" />
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/icon-167-B_zOHJzm.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icon-152-Bu1D02N1.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icon-120-B-44xR6C.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/icon-192-C5Dk5d2y.png?v=20260324-160" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/icon-512-0wsXqzOT.png?v=20260324-160" />
+  <link rel="apple-touch-icon-precomposed" href="/assets/apple-touch-icon-CYtwDItZ.png" />
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    html,
+    body {
+      margin: 0;
+      background: #050c11;
+    }
+
+    #cordyceps-boot-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+      box-sizing: border-box;
+      color: #edf9f7;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(70, 220, 190, 0.18), transparent 34%),
+        linear-gradient(145deg, #071016 0%, #050c11 54%, #07151a 100%);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 240ms ease, visibility 240ms ease;
+    }
+
+    body.cordyceps-boot-ready #cordyceps-boot-splash {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    html.cordyceps-skip-boot-splash #cordyceps-boot-splash {
+      display: none;
+    }
+
+    .cordyceps-boot-card {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .cordyceps-boot-logo {
+      width: clamp(86px, 18vw, 132px);
+      height: clamp(86px, 18vw, 132px);
+      display: block;
+      border-radius: 24%;
+      filter: drop-shadow(0 20px 46px rgba(49, 224, 188, 0.22));
+    }
+
+    .cordyceps-boot-title {
+      margin: 0;
+      font: 650 clamp(2rem, 9vw, 4rem) / 1 ui-serif, Georgia, "Times New Roman", serif;
+      letter-spacing: 0;
+    }
+
+    .cordyceps-boot-subtitle {
+      margin: -6px 0 0;
+      color: rgba(237, 249, 247, 0.72);
+      font: 500 0.82rem / 1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    }
+  </style>
+  <script>
+    (() => {
+      try {
+        const url = new URL(window.location.href);
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        const localDev = protocol === "http:" && (hostname === "localhost" || hostname === "127.0.0.1");
+        const tunnelDev = hostname.endsWith(".trycloudflare.com");
+        const standalone = window.matchMedia?.("(display-mode: standalone)")?.matches === true || navigator.standalone === true;
+        const explicitAppAccess = standalone || localDev || tunnelDev || url.searchParams.get("app") === "1" || url.searchParams.get("openApp") === "1";
+
+        if (!explicitAppAccess) {
+          document.documentElement.classList.add("cordyceps-skip-boot-splash");
+        }
+      } catch {
+        // Keep the splash as a conservative fallback if early detection fails.
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/assets/index-evVGCbrK.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DDNTBZM-.css">
+</head>
+<body>
+  <div id="cordyceps-boot-splash" role="status" aria-live="polite" aria-label="Cordyceps is starting">
+    <div class="cordyceps-boot-card" aria-hidden="true">
+      <img class="cordyceps-boot-logo" src="/assets/icon-192-C5Dk5d2y.png" alt="" />
+      <h1 class="cordyceps-boot-title">Cordyceps</h1>
+      <p class="cordyceps-boot-subtitle">Starting your local workspace</p>
+    </div>
+  </div>
+  <div id="root"></div>
+</body>
+</html>
