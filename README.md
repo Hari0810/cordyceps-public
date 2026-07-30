@@ -26,6 +26,29 @@ Cordyceps combines a daily command surface with local-first productivity tools:
 
 The app is designed to keep the core user experience in the browser. Most personal state is stored locally through browser storage and IndexedDB-style stores, with optional helper APIs used for features that need server-side assistance.
 
+## Architecture Diagram
+
+```mermaid
+flowchart TD
+    User["User on mobile browser or installed PWA"] --> Shell["PWA shell<br/>index.html, manifest, sw.js"]
+    Shell --> ServiceWorker["Service worker<br/>offline cache and update checks"]
+    Shell --> React["React / Vite bundle<br/>hashed assets"]
+    Shell --> Legacy["Legacy ES-module runtime<br/>app.js, app/, features/"]
+
+    React <-->|events and state snapshots| Bridge["Browser app bridge"]
+    Legacy <-->|events and state snapshots| Bridge
+
+    React --> Modules["Shared browser modules<br/>API, vault, push, DOM, state"]
+    Legacy --> Modules
+    Modules --> Storage["Browser-local storage<br/>localStorage and IndexedDB-style stores"]
+    Modules --> LocalAI["On-device processing<br/>WebLLM, Transformers.js, OCR, PDF, EPUB"]
+
+    Modules -. optional /api calls .-> Helper["Python helper server<br/>serve.py"]
+    Helper --> ApiModules["api/ modules<br/>RSS, ICS, current affairs, utilities"]
+    Helper --> ServerData["Optional local server data<br/>data/ is ignored and not committed"]
+    ApiModules -. network fetches .-> External["External sources<br/>feeds, calendars, optional integrations"]
+```
+
 ## Repository Shape
 
 ```text
